@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learning Levels — Peri Music</title>
+  <link rel="stylesheet" href="peri.css"/>
+  <style>
+    /* PAGE HERO */
+    .page-hero {
+      padding: 120px 36px 72px;
+      background: #EDEAE4;
+      border-bottom: 0.5px solid var(--border);
+      text-align: center;
+    }
+    .page-hero-label {
+      font-size: 11px; color: var(--amber);
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .page-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 500; letter-spacing: -0.03em;
+      line-height: 1.08; margin-bottom: 20px;
+    }
+    .page-hero h1 em { font-style: italic; color: var(--amber); }
+    .page-hero p {
+      font-size: 15px; color: var(--text-3);
+      line-height: 1.8; max-width: 540px; margin: 0 auto;
+    }
+
+    /* LEVEL NAV STRIP */
+    .level-nav {
+      position: sticky; top: 60px; z-index: 50;
+      background: var(--bg-white);
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+    }
+    .level-nav-item {
+      flex: 1; padding: 16px 8px;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      border-right: 0.5px solid var(--border);
+      cursor: pointer; text-decoration: none;
+      transition: background 0.15s;
+    }
+    .level-nav-item:last-child { border-right: none; }
+    .level-nav-item:hover { background: var(--amber-pale); }
+    .level-nav-mark {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 28px; font-style: italic;
+      color: var(--amber); line-height: 1;
+    }
+    .level-nav-name { font-size: 10px; color: var(--text-4); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* LEVEL SECTIONS */
+    .level-section {
+      border-bottom: 0.5px solid var(--border);
+      scroll-margin-top: 112px;
+      transition: background 0.3s ease;
+    }
+    .level-section:nth-child(even) { background: var(--bg-white); }
+    .level-section:hover { background: inherit; }
+
+    .level-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 72px 36px;
+      display: grid; grid-template-columns: 280px 1fr; gap: 80px;
+      align-items: start;
+    }
+
+    /* LEFT — dynamic mark + metadata */
+    .level-left {
+      position: sticky; top: 130px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .level-mark {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 8rem; font-style: italic;
+      color: var(--amber); opacity: 0.45; line-height: 0.85;
+      margin-bottom: 28px;
+    }
+    .level-full-name {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-3); margin-bottom: 28px;
+    }
+    .level-badge {
+      display: inline-block;
+      background: var(--amber-pale); color: var(--amber-text);
+      font-size: 12px; font-weight: 500;
+      padding: 6px 14px; border-radius: 20px;
+      margin-bottom: 32px;
+    }
+    .level-find-btn {
+      display: inline-block;
+      padding: 11px 22px;
+      background: var(--amber); color: #fff;
+      border-radius: 8px; font-size: 13px; font-weight: 500;
+      transition: background 0.15s;
+    }
+    .level-find-btn:hover { background: #92400E; }
+
+    /* RIGHT — content */
+    .level-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 500; letter-spacing: -0.02em;
+      margin-bottom: 12px; line-height: 1.1;
+    }
+    .level-title em { font-style: italic; color: var(--amber); }
+    .level-desc {
+      font-size: 15px; color: var(--text-3); line-height: 1.85;
+      margin-bottom: 36px; max-width: 580px;
+    }
+
+    .expect-title {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber);
+      margin-bottom: 16px;
+    }
+    .expect-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    .expect-card {
+      background: var(--bg); border: 0.5px solid var(--border);
+      border-radius: 10px; padding: 18px 20px;
+    }
+    .level-section:nth-child(even) .expect-card { background: var(--bg-white); }
+    .level-section:nth-child(even) .expect-card { background: #FAFAF7; }
+    .expect-icon { font-size: 18px; margin-bottom: 8px; }
+    .expect-card-t { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+    .expect-card-d { font-size: 12px; color: var(--text-4); line-height: 1.6; }
+
+    @media (max-width: 860px) {
+      .level-inner { grid-template-columns: 1fr; gap: 36px; }
+      .level-left { position: static; }
+      .expect-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">peri<span class="clef">𝄞</span></a>
+    <a href="index.html#instruments" class="nav-link" data-lang="nav.instru">Instruments</a>
+    <a href="tutors.html" class="nav-link" data-lang="nav.tutors">Find a tutor</a>
+    <a href="about.html" class="nav-link" data-lang="nav.about">About</a>
+    <a href="teach.html" class="nav-link" data-lang="nav.teach">Teach on Peri</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang-switcher="en" onclick="window.Peri.setLang('en')">EN</button>
+      <button class="lang-btn" data-lang-switcher="th" onclick="window.Peri.setLang('th')">ไทย</button>
+    </div>
+    <a href="tutors.html" class="nav-btn" data-lang="nav.cta">Get started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <p class="page-hero-label" data-lang="lev.hero.label">Your level</p>
+  <h1 class="hero-h1" data-lang-html="lev.hero.h1">Where do you <em>sit</em> on the scale?</h1>
+  <p data-lang-html="lev.hero.sub">We use the classical dynamic markings — from <em style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber);">pp</em> to <em style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber);">ff</em> — to describe where you are in your musical journey. Find your level and discover what lessons will look like for you.</p>
+</section>
+
+<!-- LEVEL NAV STRIP -->
+<nav class="level-nav">
+  <a href="#pp" class="level-nav-item">
+    <span class="level-nav-mark">pp</span>
+    <span class="level-nav-name" data-lang="lev.nav.pp">Beginner</span>
+  </a>
+  <a href="#p" class="level-nav-item">
+    <span class="level-nav-mark">p</span>
+    <span class="level-nav-name" data-lang="lev.nav.p">Elementary</span>
+  </a>
+  <a href="#mf" class="level-nav-item">
+    <span class="level-nav-mark">mf</span>
+    <span class="level-nav-name" data-lang="lev.nav.mf">Intermediate</span>
+  </a>
+  <a href="#f" class="level-nav-item">
+    <span class="level-nav-mark">f</span>
+    <span class="level-nav-name" data-lang="lev.nav.f">Advanced</span>
+  </a>
+  <a href="#ff" class="level-nav-item">
+    <span class="level-nav-mark">ff</span>
+    <span class="level-nav-name" data-lang="lev.nav.ff">Diploma</span>
+  </a>
+</nav>
+
+<!-- ══ pp ══ -->
+<div class="level-section" id="pp">
+  <div class="level-inner">
+    <div class="level-left">
+      <div class="level-mark">pp</div>
+      <div class="level-full-name">Pianissimo</div>
+      <div class="level-badge" data-lang="lev.pp.badge">Complete beginner</div>
+      <a href="tutors.html" class="level-find-btn" data-lang="lev.pp.btn">Find a pp tutor →</a>
+    </div>
+    <div class="level-right">
+      <h2 class="level-title s-title" data-lang-html="lev.pp.title">You're just <em>starting out.</em></h2>
+      <p class="level-desc" data-lang="lev.pp.desc">You've never played before — or picked up an instrument years ago and let it go. Either way, you're starting from zero, and that's perfectly fine. Every great musician was once here. At pp, the goal isn't perfection; it's building a real foundation, falling in love with your instrument, and making your first sounds feel intentional.</p>
+      <p class="expect-title" data-lang="lev.pp.expect">What to expect from your lessons</p>
+      <div class="expect-grid">
+        <div class="expect-card">
+          <div class="expect-icon">🤝</div>
+          <div class="expect-card-t" data-lang="lev.pp.c1.t">Getting comfortable</div>
+          <div class="expect-card-d" data-lang="lev.pp.c1.d">Your tutor starts with posture, hand position, and how to hold or sit at your instrument correctly — the habits that make everything easier later.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🎵</div>
+          <div class="expect-card-t" data-lang="lev.pp.c2.t">Reading music basics</div>
+          <div class="expect-card-d" data-lang="lev.pp.c2.d">Notes, rhythm, time signatures — introduced gradually alongside your playing so theory never feels abstract or disconnected.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🎯</div>
+          <div class="expect-card-t" data-lang="lev.pp.c3.t">Your first real pieces</div>
+          <div class="expect-card-d" data-lang="lev.pp.c3.d">Simple, satisfying music you'll actually recognise and enjoy. The aim is for you to feel like a musician from lesson one.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🗓️</div>
+          <div class="expect-card-t" data-lang="lev.pp.c4.t">A structured path forward</div>
+          <div class="expect-card-d" data-lang="lev.pp.c4.d">Your tutor maps out a clear curriculum so you always know what you're working toward, with milestones that keep progress visible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ p ══ -->
+<div class="level-section" id="p">
+  <div class="level-inner">
+    <div class="level-left">
+      <div class="level-mark">p</div>
+      <div class="level-full-name">Piano</div>
+      <div class="level-badge" data-lang="lev.p.badge">Some experience</div>
+      <a href="tutors.html" class="level-find-btn" data-lang="lev.p.btn">Find a p tutor →</a>
+    </div>
+    <div class="level-right">
+      <h2 class="level-title s-title" data-lang-html="lev.p.title">You know the <em>basics.</em></h2>
+      <p class="level-desc" data-lang="lev.p.desc">You've had some lessons, followed a tutorial online, or taught yourself the fundamentals. You can play simple pieces but feel like there are gaps — things you're doing by habit rather than understanding. At p level, lessons focus on closing those gaps, building technique more deliberately, and expanding your repertoire in a direction that actually excites you.</p>
+      <p class="expect-title" data-lang="lev.p.expect">What to expect from your lessons</p>
+      <div class="expect-grid">
+        <div class="expect-card">
+          <div class="expect-icon">🔧</div>
+          <div class="expect-card-t" data-lang="lev.p.c1.t">Technique audit</div>
+          <div class="expect-card-d" data-lang="lev.p.c1.d">Your tutor identifies what you've picked up well and what needs adjusting — catching bad habits early before they become harder to fix.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">📖</div>
+          <div class="expect-card-t" data-lang="lev.p.c2.t">Deeper music reading</div>
+          <div class="expect-card-d" data-lang="lev.p.c2.d">Moving past basics into dynamics, articulation, and expression — learning to read music as a language, not just a set of instructions.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🎼</div>
+          <div class="expect-card-t" data-lang="lev.p.c3.t">Repertoire that challenges</div>
+          <div class="expect-card-d" data-lang="lev.p.c3.d">Pieces that stretch you without overwhelming — carefully chosen to build new skills while keeping lessons engaging and rewarding.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🧠</div>
+          <div class="expect-card-t" data-lang="lev.p.c4.t">Understanding why</div>
+          <div class="expect-card-d" data-lang="lev.p.c4.d">Less doing-what-you're-told, more understanding the music. Your tutor explains the reasoning behind technique so you can self-correct between sessions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ mf ══ -->
+<div class="level-section" id="mf">
+  <div class="level-inner">
+    <div class="level-left">
+      <div class="level-mark">mf</div>
+      <div class="level-full-name">Mezzo-forte</div>
+      <div class="level-badge" data-lang="lev.mf.badge">Intermediate</div>
+      <a href="tutors.html" class="level-find-btn" data-lang="lev.mf.btn">Find an mf tutor →</a>
+    </div>
+    <div class="level-right">
+      <h2 class="level-title s-title" data-lang-html="lev.mf.title">You're <em>comfortable,</em> but not quite there yet.</h2>
+      <p class="level-desc" data-lang="lev.mf.desc">You can play confidently and tackle pieces of real substance. You have a feel for music — you've developed an ear, a sense of style. But you know there's a ceiling you haven't broken through, technically or expressively. At mf, lessons become more nuanced: refining sound, developing musical personality, and taking on repertoire that demands genuine artistry.</p>
+      <p class="expect-title" data-lang="lev.mf.expect">What to expect from your lessons</p>
+      <div class="expect-grid">
+        <div class="expect-card">
+          <div class="expect-icon">🎨</div>
+          <div class="expect-card-t" data-lang="lev.mf.c1.t">Musical expression</div>
+          <div class="expect-card-d" data-lang="lev.mf.c1.d">Moving beyond correct notes into real interpretation — colour, phrasing, timing, dynamics — developing your own voice on the instrument.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">⚡</div>
+          <div class="expect-card-t" data-lang="lev.mf.c2.t">Technical refinement</div>
+          <div class="expect-card-d" data-lang="lev.mf.c2.d">Advanced exercises, scales, and études that build speed, evenness, and control — the kind of technical work that separates good from excellent.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🎭</div>
+          <div class="expect-card-t" data-lang="lev.mf.c3.t">Substantial repertoire</div>
+          <div class="expect-card-d" data-lang="lev.mf.c3.d">Longer, more demanding works that require weeks of preparation — pieces you'll be genuinely proud to perform for family, friends, or an audience.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">👂</div>
+          <div class="expect-card-t" data-lang="lev.mf.c4.t">Ear training</div>
+          <div class="expect-card-d" data-lang="lev.mf.c4.d">Developing a more critical ear so you can hear what needs improving before your tutor says a word — a skill that accelerates all future progress.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ f ══ -->
+<div class="level-section" id="f">
+  <div class="level-inner">
+    <div class="level-left">
+      <div class="level-mark">f</div>
+      <div class="level-full-name">Forte</div>
+      <div class="level-badge" data-lang="lev.f.badge">Advanced</div>
+      <a href="tutors.html" class="level-find-btn" data-lang="lev.f.btn">Find an f tutor →</a>
+    </div>
+    <div class="level-right">
+      <h2 class="level-title s-title" data-lang-html="lev.f.title">You play at a <em>performance</em> level.</h2>
+      <p class="level-desc" data-lang="lev.f.desc">You're past the point where technique is the limiting factor. You've performed in public, perhaps competed or passed formal exams. What you're looking for now is refinement, depth, and a tutor who can match your level — someone who can hear the small things, challenge your interpretations, and push you in ways that general teachers can't. At f, lessons are conversations between serious musicians.</p>
+      <p class="expect-title" data-lang="lev.f.expect">What to expect from your lessons</p>
+      <div class="expect-grid">
+        <div class="expect-card">
+          <div class="expect-icon">🏛️</div>
+          <div class="expect-card-t" data-lang="lev.f.c1.t">Masterclass-style coaching</div>
+          <div class="expect-card-d" data-lang="lev.f.c1.d">Deep, detailed work on a small number of pieces — the kind of focused refinement that live performance demands and that separates polished from professional.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🎤</div>
+          <div class="expect-card-t" data-lang="lev.f.c2.t">Performance preparation</div>
+          <div class="expect-card-d" data-lang="lev.f.c2.d">Recitals, concerts, competitions — your tutor helps you manage nerves, shape your programme, and perform at your best when it counts.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">📚</div>
+          <div class="expect-card-t" data-lang="lev.f.c3.t">Repertoire &amp; style depth</div>
+          <div class="expect-card-d" data-lang="lev.f.c3.d">Exploring the history and context behind music you're playing — understanding style periods and composers in a way that transforms interpretation.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🔬</div>
+          <div class="expect-card-t" data-lang="lev.f.c4.t">Fine-grained feedback</div>
+          <div class="expect-card-d" data-lang="lev.f.c4.d">At this level, your tutor catches micro-details — subtle tension, tiny rhythmic inconsistencies, voicing choices — that make the difference between good and memorable.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ff ══ -->
+<div class="level-section" id="ff">
+  <div class="level-inner">
+    <div class="level-left">
+      <div class="level-mark">ff</div>
+      <div class="level-full-name">Fortissimo</div>
+      <div class="level-badge" data-lang="lev.ff.badge">Diploma &amp; exam prep</div>
+      <a href="tutors.html" class="level-find-btn" data-lang="lev.ff.btn">Find an ff tutor →</a>
+    </div>
+    <div class="level-right">
+      <h2 class="level-title s-title" data-lang-html="lev.ff.title">You're preparing for something <em>significant.</em></h2>
+      <p class="level-desc" data-lang="lev.ff.desc">ABRSM Grade 8, Trinity diplomas, conservatory auditions, university entrance — you have a specific, high-stakes target and you need a tutor who has been there themselves. At ff, every lesson is purposeful. The syllabus is known, the timeline is clear, and the work is intense. Your tutor has guided students through these exact exams and knows what panels and examiners are looking for.</p>
+      <p class="expect-title" data-lang="lev.ff.expect">What to expect from your lessons</p>
+      <div class="expect-grid">
+        <div class="expect-card">
+          <div class="expect-icon">📋</div>
+          <div class="expect-card-t" data-lang="lev.ff.c1.t">Exam-mapped curriculum</div>
+          <div class="expect-card-d" data-lang="lev.ff.c1.d">Every lesson planned against the syllabus requirements — pieces, scales, sight-reading, aural tests — so nothing is left to chance in the exam room.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">⏱️</div>
+          <div class="expect-card-t" data-lang="lev.ff.c2.t">Mock exams &amp; timed practice</div>
+          <div class="expect-card-d" data-lang="lev.ff.c2.d">Simulated exam conditions so the real thing feels familiar. Your tutor marks you using the actual assessment criteria and gives structured, written feedback.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🎓</div>
+          <div class="expect-card-t" data-lang="lev.ff.c3.t">Conservatory-level tutors</div>
+          <div class="expect-card-d" data-lang="lev.ff.c3.d">Every ff tutor on Peri holds advanced qualifications and has personally guided students through diploma and audition preparation successfully.</div>
+        </div>
+        <div class="expect-card">
+          <div class="expect-icon">🧩</div>
+          <div class="expect-card-t" data-lang="lev.ff.c4.t">Holistic exam readiness</div>
+          <div class="expect-card-d" data-lang="lev.ff.c4.d">Not just the pieces — viva preparation, written paper support, and the mental and physical readiness to perform under pressure on the day.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="cta-inner">
+    <div>
+      <div class="cta-t" data-lang="lev.cta.t">Not sure which level you are?</div>
+      <div class="cta-s" data-lang="lev.cta.s">A free intro call is the easiest way to see if the tutor feels right.</div>
+    </div>
+    <div class="cta-actions">
+      <a href="tutors.html" class="btn btn-primary" data-lang="lev.cta.btn">Browse tutors</a>
+      <a href="faq.html" style="display:inline-flex;align-items:center;font-size:13px;color:rgba(255,255,255,0.75);padding:12px 24px;border-radius:10px;border:0.5px solid rgba(255,255,255,0.35);" data-lang="lev.cta.link">Read the FAQ</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#1C1410; border-top:0.5px solid rgba(255,255,255,0.08);">
+  <div class="footer-inner">
+    <div class="foot-logo" style="color:rgba(255,255,255,0.88);">peri<span class="clef">𝄞</span></div>
+    <div class="foot-links">
+      <a href="tutors.html" class="foot-link" style="color:rgba(255,255,255,0.5);">Find a tutor</a>
+      <a href="teach.html" class="foot-link" style="color:rgba(255,255,255,0.5);">Teach on Peri</a>
+      <a href="about.html" class="foot-link" style="color:rgba(255,255,255,0.5);">About</a>
+      <a href="faq.html" class="foot-link" style="color:rgba(255,255,255,0.5);">FAQ</a>
+    </div>
+    <div class="foot-copy" style="color:rgba(255,255,255,0.3);">© 2026 Peri Music Ltd. · Thailand</div>
+  </div>
+</footer>
+
+<script src="lang.js"></script>
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+  // ── Italic em fade-in ──
+  const emObs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('em-revealed'); o.unobserve(e.target); }});
+  }, {threshold:0.25});
+  document.querySelectorAll('.s-title, .hero-h1').forEach(el => emObs.observe(el));
+</script>
+</body>
+</html>

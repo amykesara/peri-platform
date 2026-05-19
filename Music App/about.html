@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Peri — Online Music Tutoring in Thailand</title>
+  <link rel="stylesheet" href="peri.css"/>
+  <style>
+    .page-hero {
+      padding: 120px 36px 72px;
+      background: linear-gradient(150deg, #F7F4F0 0%, #FFF0D6 55%, #F7F4F0 100%);
+      border-bottom: 0.5px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .page-hero-inner { max-width: 1160px; margin: 0 auto; }
+    .page-hero-label {
+      font-size: 11px; color: var(--amber);
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .page-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 500; letter-spacing: -0.03em;
+      line-height: 1.08; margin-bottom: 20px;
+    }
+    .page-hero h1 em { font-style: italic; color: var(--amber); }
+    .page-hero p {
+      font-size: 15px; color: var(--text-3);
+      line-height: 1.8; max-width: 560px;
+    }
+
+    /* VALUES */
+    .values-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; border: 0.5px solid var(--border);
+      border-radius: var(--r-md); overflow: hidden;
+    }
+    .value-card {
+      padding: 32px 28px;
+      border-right: 0.5px solid var(--border);
+      background: var(--bg-white);
+      transition: background 0.2s;
+    }
+    .value-card:nth-child(odd) { background: #FAFAF7; }
+    .value-card:nth-child(even) { background: #FFF8ED; }
+    .value-card:last-child { border-right: none; }
+    .value-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px; color: var(--amber);
+      font-style: italic; margin-bottom: 12px;
+      line-height: 1; opacity: 0.55;
+    }
+    .value-title { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+    .value-body { font-size: 13px; color: var(--text-3); line-height: 1.75; }
+
+    /* STORY */
+    .story-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .story-body p {
+      font-size: 14px; color: var(--text-3);
+      line-height: 1.85; margin-bottom: 16px;
+    }
+    .story-body p:last-child { margin-bottom: 0; }
+    .story-stat-block {
+      background: var(--bg-white); border: 0.5px solid var(--border);
+      border-radius: var(--r-md); padding: 32px;
+    }
+    .story-stat {
+      padding: 20px 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .story-stat:last-child { border-bottom: none; padding-bottom: 0; }
+    .story-stat:first-child { padding-top: 0; }
+    .story-stat-n {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.4rem; font-weight: 500;
+      color: var(--amber); line-height: 1; margin-bottom: 4px;
+    }
+    .story-stat-l { font-size: 12px; color: var(--text-4); }
+
+    /* TUTOR PROMISE */
+    .promise-band {
+      background: #EDEAE4; padding: 64px 36px;
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .promise-inner { max-width: 1160px; margin: 0 auto; }
+    .promise-label {
+      font-size: 11px; color: var(--amber);
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .promise-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 500; color: var(--text);
+      letter-spacing: -0.02em; margin-bottom: 36px;
+    }
+    .promise-title em { font-style: italic; color: var(--amber); }
+    .promise-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    }
+    .promise-item {
+      padding: 24px 20px;
+      border-right: 0.5px solid var(--border);
+    }
+    .promise-item:last-child { border-right: none; }
+    .promise-icon { font-size: 20px; margin-bottom: 12px; }
+    .promise-item-t { font-size: 14px; color: var(--text); font-weight: 500; margin-bottom: 6px; }
+    .promise-item-d { font-size: 12px; color: var(--text-3); line-height: 1.6; }
+
+    @media (max-width: 900px) {
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+      .promise-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .promise-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">peri<span class="clef">𝄞</span></a>
+    <a href="index.html#how" class="nav-link" data-lang="nav.how">How it works</a>
+    <a href="tutors.html" class="nav-link" data-lang="nav.tutors">Find a tutor</a>
+    <a href="about.html" class="nav-link active" data-lang="nav.about">About</a>
+    <a href="teach.html" class="nav-link" data-lang="nav.teach">Teach on Peri</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang-switcher="en" onclick="window.Peri.setLang('en')">EN</button>
+      <button class="lang-btn" data-lang-switcher="th" onclick="window.Peri.setLang('th')">ไทย</button>
+    </div>
+    <a href="tutors.html" class="nav-btn" data-lang="nav.cta">Get started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <p class="page-hero-label" data-lang="abt.hero.label">Our story</p>
+    <h1 class="hero-h1" data-lang-html="abt.hero.h1">Music education in Thailand<br/>deserves to be <em>better.</em></h1>
+    <p data-lang="abt.hero.sub">Peri was built on a simple belief: the best music teachers shouldn't have to fight algorithms to find students — and serious students shouldn't have to settle for whoever shows up first in a search.</p>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section" style="border-bottom:0.5px solid var(--border);">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <p class="sec-label" data-lang="abt.val.label">What we believe</p>
+        <h2 class="sec-title s-title" data-lang="abt.val.title">Built on three principles</h2>
+      </div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-num" data-lang="abt.val1.n">01</div>
+        <div class="value-title" data-lang="abt.val1.t">Curation over volume</div>
+        <div class="value-body" data-lang="abt.val1.d">Every tutor on Peri has been personally reviewed — credentials checked, a trial lesson observed, and ongoing student feedback monitored. We'd rather have 50 exceptional teachers than 5,000 average ones.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-num" data-lang="abt.val2.n">02</div>
+        <div class="value-title" data-lang="abt.val2.t">Fair pay for educators</div>
+        <div class="value-body" data-lang="abt.val2.d">Tutors set their own rates with guidance from Peri based on experience, instrument, and student level. Students see a clear price breakdown before booking.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-num" data-lang="abt.val3.n">03</div>
+        <div class="value-title" data-lang="abt.val3.t">Progress you can see</div>
+        <div class="value-body" data-lang="abt.val3.d">Lessons without structure fade. Peri students follow clear learning paths, hit real milestones, and earn certificates they can be proud of. Every teacher builds a curriculum, not just a booking calendar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section" style="background:var(--bg-white); border-bottom:0.5px solid var(--border);">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-body">
+        <p class="sec-label" data-lang="abt.story.label">The story</p>
+        <h2 class="sec-title s-title" style="margin-bottom:24px;" data-lang="abt.story.title">Why we started Peri</h2>
+        <p data-lang="abt.story.p1">Thailand has an extraordinary depth of musical talent — conservatory-trained pianists, classically schooled violinists, self-taught guitarists who've played for decades. But finding them, vetting them, and booking them was always a patchwork of LINE messages, Facebook groups, and word of mouth.</p>
+        <p data-lang="abt.story.p2">We built Peri to change that. A curated platform where quality comes first: where students can browse verified profiles, request a short intro call, and book lessons with a tutor who fits their goals.</p>
+        <p data-lang="abt.story.p3">We launched online-first so that students anywhere in Thailand — not just Bangkok — can access the same quality of instruction. Your location shouldn't limit your musical education.</p>
+      </div>
+      <div>
+        <div class="story-stat-block">
+          <div class="story-stat">
+            <div class="story-stat-n" data-lang="abt.stat1.n">48+</div>
+            <div class="story-stat-l" data-lang="abt.stat1.l">Vetted tutors across Thailand</div>
+          </div>
+          <div class="story-stat">
+            <div class="story-stat-n" data-lang="abt.stat2.n">11</div>
+            <div class="story-stat-l" data-lang="abt.stat2.l">Instruments available</div>
+          </div>
+          <div class="story-stat">
+            <div class="story-stat-n" data-lang="abt.stat3.n">Clear</div>
+            <div class="story-stat-l" data-lang="abt.stat3.l">Pricing shown before booking</div>
+          </div>
+          <div class="story-stat">
+            <div class="story-stat-n" data-lang="abt.stat4.n">Free</div>
+            <div class="story-stat-l" data-lang="abt.stat4.l">Intro call before paid lessons</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TUTOR PROMISE -->
+<div class="promise-band">
+  <div class="promise-inner">
+    <p class="promise-label" data-lang="abt.promise.label">Our promise to tutors</p>
+    <h2 class="promise-title s-title" data-lang-html="abt.promise.title">We built this for the <em>teachers</em> too.</h2>
+    <div class="promise-grid">
+      <div class="promise-item">
+        <div class="promise-icon">฿</div>
+        <div class="promise-item-t" data-lang="abt.pr1.t">Set your own rate</div>
+        <div class="promise-item-d" data-lang="abt.pr1.d">You choose your price. Peri shows students the platform fee clearly before they book.</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">📅</div>
+        <div class="promise-item-t" data-lang="abt.pr2.t">Your schedule, your rules</div>
+        <div class="promise-item-d" data-lang="abt.pr2.d">Set your own availability. Accept bookings on your terms. No minimums.</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">🎓</div>
+        <div class="promise-item-t" data-lang="abt.pr3.t">Profile that converts</div>
+        <div class="promise-item-d" data-lang="abt.pr3.d">A clean, professional page that shows your credentials, your reviews, and your teaching style.</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">🌐</div>
+        <div class="promise-item-t" data-lang="abt.pr4.t">Reach all of Thailand</div>
+        <div class="promise-item-d" data-lang="abt.pr4.d">Teach students from Chiang Mai to Hat Yai — online, no commute required.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEVELS -->
+<section class="section" style="background:var(--bg); border-bottom:0.5px solid var(--border);">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <p class="sec-label" data-lang="abt.lev.label">Learning levels</p>
+        <h2 class="sec-title s-title" data-lang-html="abt.lev.title">Where do you sit<br/>on the <em>scale?</em></h2>
+      </div>
+      <a href="levels.html" style="font-size:13px;color:var(--text-3);border-bottom:0.5px solid var(--border);padding-bottom:2px;" data-lang="abt.lev.link">Explore all levels →</a>
+    </div>
+    <p style="font-size:14px;color:var(--text-3);line-height:1.8;max-width:560px;margin-bottom:40px;" data-lang="abt.lev.body">We use classical dynamic markings to describe where students are in their journey — from the very first note to diploma-level preparation.</p>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;">
+      <a href="levels.html#pp" style="padding:28px 20px;border-right:0.5px solid var(--border);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='#FEF3C7'" onmouseout="this.style.background=''">
+        <div style="font-family:'Times New Roman',serif;font-size:3rem;font-style:italic;color:#B45309;line-height:1;margin-bottom:14px;">pp</div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:8px;">Pianissimo</div>
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:6px;" data-lang="abt.lev.pp.badge">Complete beginner</div>
+        <div style="font-size:12px;color:#777;line-height:1.55;" data-lang="abt.lev.pp.d">Never played before, starting from zero.</div>
+      </a>
+      <a href="levels.html#p" style="padding:28px 20px;border-right:0.5px solid var(--border);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='#FEF3C7'" onmouseout="this.style.background=''">
+        <div style="font-family:'Times New Roman',serif;font-size:3rem;font-style:italic;color:#B45309;line-height:1;margin-bottom:14px;">p</div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:8px;">Piano</div>
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:6px;" data-lang="abt.lev.p.badge">Some experience</div>
+        <div style="font-size:12px;color:#777;line-height:1.55;" data-lang="abt.lev.p.d">Basics in place, filling in the gaps.</div>
+      </a>
+      <a href="levels.html#mf" style="padding:28px 20px;border-right:0.5px solid var(--border);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='#FEF3C7'" onmouseout="this.style.background=''">
+        <div style="font-family:'Times New Roman',serif;font-size:3rem;font-style:italic;color:#B45309;line-height:1;margin-bottom:14px;">mf</div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:8px;">Mezzo-forte</div>
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:6px;" data-lang="abt.lev.mf.badge">Intermediate</div>
+        <div style="font-size:12px;color:#777;line-height:1.55;" data-lang="abt.lev.mf.d">Comfortable but not yet at the ceiling.</div>
+      </a>
+      <a href="levels.html#f" style="padding:28px 20px;border-right:0.5px solid var(--border);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='#FEF3C7'" onmouseout="this.style.background=''">
+        <div style="font-family:'Times New Roman',serif;font-size:3rem;font-style:italic;color:#B45309;line-height:1;margin-bottom:14px;">f</div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:8px;">Forte</div>
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:6px;" data-lang="abt.lev.f.badge">Advanced</div>
+        <div style="font-size:12px;color:#777;line-height:1.55;" data-lang="abt.lev.f.d">Performance-level, seeking refinement.</div>
+      </a>
+      <a href="levels.html#ff" style="padding:28px 20px;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='#FEF3C7'" onmouseout="this.style.background=''">
+        <div style="font-family:'Times New Roman',serif;font-size:3rem;font-style:italic;color:#B45309;line-height:1;margin-bottom:14px;">ff</div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#999;margin-bottom:8px;">Fortissimo</div>
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:6px;" data-lang="abt.lev.ff.badge">Diploma &amp; exam prep</div>
+        <div style="font-size:12px;color:#777;line-height:1.55;" data-lang="abt.lev.ff.d">ABRSM, Trinity, conservatory auditions.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="cta-inner">
+    <div>
+      <div class="cta-t" data-lang="abt.cta.t">Ready to find your tutor?</div>
+      <div class="cta-s" data-lang="abt.cta.s">Start with a free intro call before booking a lesson.</div>
+    </div>
+    <div class="cta-actions">
+      <a href="tutors.html" class="btn btn-primary" data-lang="abt.cta.btn">Browse tutors</a>
+      <a href="teach.html" style="display:inline-flex;align-items:center;font-size:13px;color:rgba(255,255,255,0.75);padding:12px 24px;border-radius:10px;border:0.5px solid rgba(255,255,255,0.35);" data-lang="abt.cta.link">Teach on Peri</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#1C1410; border-top:0.5px solid rgba(255,255,255,0.08);">
+  <div class="footer-inner">
+    <div class="foot-logo" style="color:rgba(255,255,255,0.88);">peri<span class="clef">𝄞</span></div>
+    <div class="foot-links">
+      <a href="tutors.html" class="foot-link" style="color:rgba(255,255,255,0.5);" data-lang="foot.tutors">Find a tutor</a>
+      <a href="teach.html" class="foot-link" style="color:rgba(255,255,255,0.5);" data-lang="foot.teach">Teach on Peri</a>
+      <a href="about.html" class="foot-link" style="color:rgba(255,255,255,0.5);" data-lang="foot.about">About</a>
+      <a href="faq.html" class="foot-link" style="color:rgba(255,255,255,0.5);" data-lang="foot.faq">FAQ</a>
+    </div>
+    <div class="foot-copy" style="color:rgba(255,255,255,0.3);" data-lang="foot.copy">© 2026 Peri Music Ltd. · Thailand</div>
+  </div>
+</footer>
+
+<script src="lang.js"></script>
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+  // ── Italic em fade-in ──
+  const emObs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('em-revealed'); o.unobserve(e.target); }});
+  }, {threshold:0.25});
+  document.querySelectorAll('.s-title, .hero-h1').forEach(el => emObs.observe(el));
+</script>
+</body>
+</html>

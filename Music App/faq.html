@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ — Peri Music</title>
+  <link rel="stylesheet" href="peri.css"/>
+  <style>
+    .page-hero {
+      padding: 120px 36px 60px;
+      background: linear-gradient(150deg, #F7F4F0 0%, #FFF0D6 55%, #F7F4F0 100%);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .page-hero-inner { max-width: 720px; margin: 0 auto; }
+    .page-hero-label {
+      font-size: 11px; color: var(--amber);
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .page-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+      font-weight: 500; letter-spacing: -0.03em;
+      line-height: 1.08; margin-bottom: 14px;
+    }
+    .page-hero p { font-size: 14px; color: var(--text-3); line-height: 1.75; }
+
+    /* FAQ LAYOUT */
+    .faq-layout {
+      max-width: 1160px; margin: 0 auto;
+      padding: 56px 36px 80px;
+      display: grid; grid-template-columns: 220px 1fr; gap: 56px;
+      align-items: start;
+    }
+
+    /* CATEGORY SIDEBAR */
+    .faq-nav {
+      position: sticky; top: 90px;
+    }
+    .faq-nav-title {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-4); margin-bottom: 12px;
+    }
+    .faq-nav-link {
+      display: block; font-size: 13px; color: var(--text-3);
+      padding: 8px 12px; border-radius: var(--r-sm);
+      margin-bottom: 2px; cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .faq-nav-link:hover { background: var(--amber-pale); color: var(--amber-text); }
+    .faq-nav-link.active { background: var(--amber-pale); color: var(--amber-text); font-weight: 500; }
+
+    /* FAQ SECTIONS */
+    .faq-section { margin-bottom: 52px; }
+    .faq-section:last-child { margin-bottom: 0; }
+    .faq-section-title {
+      display: inline-block;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber-text);
+      margin-bottom: 16px;
+      padding: 5px 14px;
+      background: rgba(255,255,255,0.70);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 0.5px solid rgba(194,97,10,0.18);
+      border-radius: 999px;
+    }
+
+    /* ACCORDION — liquid glass cards */
+    .faq-item {
+      background: rgba(255,255,255,0.58);
+      backdrop-filter: blur(24px) saturate(1.35);
+      -webkit-backdrop-filter: blur(24px) saturate(1.35);
+      border: 0.5px solid rgba(255,255,255,0.82);
+      border-radius: 16px;
+      box-shadow: 0 2px 18px rgba(92,64,37,0.07),
+                  inset 0 1px 0 rgba(255,255,255,0.95);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .faq-q {
+      width: 100%; display: flex; justify-content: space-between;
+      align-items: center; gap: 16px;
+      padding: 18px 22px; cursor: pointer; background: none; border: none;
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+      color: var(--text); text-align: left;
+      transition: color 0.15s;
+    }
+    .faq-q:hover { color: var(--amber); }
+    .faq-q.open { color: var(--amber); }
+    .faq-chevron {
+      font-size: 11px; color: var(--text-4); flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1);
+    }
+    .faq-q.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      font-size: 13px; color: var(--text-3); line-height: 1.85;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.22,1,0.36,1),
+                  padding 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .faq-a.open {
+      max-height: 400px;
+      padding: 0 22px 20px;
+    }
+    .faq-a a { color: var(--amber); text-decoration: underline; text-underline-offset: 2px; }
+
+    @media (max-width: 800px) {
+      .faq-layout { grid-template-columns: 1fr; }
+      .faq-nav { position: static; display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+      .faq-nav-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">peri<span class="clef">𝄞</span></a>
+    <a href="index.html#how" class="nav-link" data-lang="nav.how">How it works</a>
+    <a href="tutors.html" class="nav-link" data-lang="nav.tutors">Find a tutor</a>
+    <a href="about.html" class="nav-link" data-lang="nav.about">About</a>
+    <a href="teach.html" class="nav-link" data-lang="nav.teach">Teach on Peri</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang-switcher="en" onclick="window.Peri.setLang('en')">EN</button>
+      <button class="lang-btn" data-lang-switcher="th" onclick="window.Peri.setLang('th')">ไทย</button>
+    </div>
+    <a href="tutors.html" class="nav-btn" data-lang="nav.cta">Get started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <p class="page-hero-label" data-lang="faq.hero.label">Help centre</p>
+    <h1 data-lang="faq.hero.h1">Frequently asked questions</h1>
+    <p><span data-lang="faq.hero.sub">Everything you need to know about lessons, tutors, pricing, and how Peri works. Can't find your answer?</span> <a href="mailto:hello@perimusic.co.th" style="color:var(--amber);" data-lang="faq.hero.email">Email us</a>.</p>
+  </div>
+</section>
+
+<!-- FAQ BODY -->
+<div class="faq-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="faq-nav">
+    <div class="faq-nav-title" data-lang="faq.nav.title">Jump to</div>
+    <a class="faq-nav-link active" onclick="scrollTo('for-students')" data-lang="faq.cat.stu">For students</a>
+    <a class="faq-nav-link" onclick="scrollTo('lessons')" data-lang="faq.cat.les">Lessons &amp; booking</a>
+    <a class="faq-nav-link" onclick="scrollTo('pricing')" data-lang="faq.cat.pri">Pricing &amp; payment</a>
+    <a class="faq-nav-link" onclick="scrollTo('for-tutors')" data-lang="faq.cat.tut">For tutors</a>
+  </aside>
+
+  <!-- QUESTIONS -->
+  <div>
+
+    <!-- FOR STUDENTS -->
+    <div class="faq-section" id="for-students">
+      <div class="faq-section-title" data-lang="faq.stu.title">For students</div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q1">Is there a free intro call?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a1">Yes — before booking a paid lesson, you can request a short online intro call with the tutor. It is not a full lesson; it is a chance to meet, talk about your goals, and decide if the tutor feels like the right fit.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q2">How does Peri vet its tutors?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a2">Every tutor goes through a three-stage review before they can teach on Peri: we check their qualifications and experience, observe or review a sample lesson, and monitor ongoing student reviews. Tutors who fall below our standards are removed. You'll never be shown a profile that hasn't passed this process.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q3">Can I learn online from anywhere in Thailand?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a3">Yes. Peri is online-first, which means all you need is a reliable internet connection. Most lessons are conducted via Zoom or Google Meet. Some tutors also offer in-person lessons if you're in the same city — you can filter by "in-person" when browsing.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q4">What if I'm a complete beginner?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a4">Absolutely welcome. Many of our tutors specialise in beginners and have developed structured curricula specifically for people starting from zero. When browsing, use the "Beginner" level filter and look for tutors who list "beginner-friendly" in their specialities.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q5">What instruments are available?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a5">We currently have tutors for piano, violin, cello, classical guitar, pop guitar, voice, drums &amp; percussion, trumpet, saxophone, flute, and music theory — 11 instruments in total.</div>
+      </div>
+    </div>
+
+    <!-- LESSONS & BOOKING -->
+    <div class="faq-section" id="lessons">
+      <div class="faq-section-title" data-lang="faq.les.title">Lessons &amp; booking</div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q6">How do I book a lesson?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a6">Browse tutors, click on a profile you like, and use the booking panel on the right to choose a day, time slot, lesson length (30, 60, or 90 minutes), and format (online or in-person where available). You'll see a full fee breakdown before confirming.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q7">Can I reschedule or cancel a lesson?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a7">Yes — lessons can be rescheduled or cancelled up to 24 hours before the start time at no charge. Cancellations within 24 hours may be subject to a fee at the tutor's discretion. We'll always show you the tutor's cancellation policy on their profile page.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q8">What happens after I book?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a8">You'll receive a confirmation with the Zoom link (or meeting details) for your lesson. Your tutor will also reach out before your first session to introduce themselves and ask about your goals. If you have any issues, our support team is reachable at hello@perimusic.co.th.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q9">Do lessons come with any materials or homework?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a9">Most tutors on Peri teach using a structured curriculum and will provide practice notes, sheet music, or exercises after each session. Ask your tutor during the intro call what their approach looks like — you'll quickly get a sense of their teaching style.</div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="faq-section" id="pricing">
+      <div class="faq-section-title" data-lang="faq.pri.title">Pricing &amp; payment</div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q10">How much do lessons cost?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a10">Each tutor sets their own hourly rate — typically between ฿400 and ฿1,200/hour depending on experience and instrument. Peri may add a transparent platform fee at checkout, and you'll always see the complete price breakdown before confirming.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q11">What payment methods are accepted?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a11">We accept PromptPay, major credit and debit cards (Visa, Mastercard), and bank transfer. Payment is processed securely at the time of booking.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q12">Are there package deals or discounts?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a12">Some tutors may offer multi-lesson packages at a discounted rate — you'll see this noted on their profile. Peri is still refining the best pricing model for regular students.</div>
+      </div>
+    </div>
+
+    <!-- FOR TUTORS -->
+    <div class="faq-section" id="for-tutors">
+      <div class="faq-section-title" data-lang="faq.tut.title">For tutors</div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q13">How much do tutors earn on Peri?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a13">You set your own rate freely, and Peri offers pricing guidance based on your experience and instrument. Students see a clear price breakdown before booking. We are still refining the final payment model as the platform develops.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q14">How do I apply to teach on Peri?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a14">Fill out the application form on our <a href="teach.html">Teach on Peri</a> page. We review every application individually — typically within 5–7 business days. If your application looks promising, we'll invite you to a brief introductory call.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q15">Do I need a music degree to teach on Peri?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a15">Not necessarily. We look at the full picture: your teaching experience, student outcomes, qualifications, and how you present yourself. Some of our most effective tutors are self-taught professionals with years of real-world performance experience. What matters is that you can help students make genuine progress.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggle(this)"><span data-lang="faq.q16">Can I teach both online and in-person?</span> <span class="faq-chevron">▼</span></button>
+        <div class="faq-a" data-lang="faq.a16">Yes. When you set up your profile, you can choose to offer online-only, in-person only, or both. If you offer in-person, you can specify which city or area you're based in.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#1C1410; border-top:0.5px solid rgba(255,255,255,0.08);">
+  <div class="footer-inner">
+    <div class="foot-logo" style="color:rgba(255,255,255,0.88);">peri<span class="clef">𝄞</span></div>
+    <div class="foot-links">
+      <a href="tutors.html" class="foot-link" style="color:rgba(255,255,255,0.5);" data-lang="foot.tutors">Find a tutor</a>
+      <a href="teach.html" class="foot-link" style="color:rgba(255,255,255,0.5);" data-lang="foot.teach">Teach on Peri</a>
+      <a href="about.html" class="foot-link" style="color:rgba(255,255,255,0.5);" data-lang="foot.about">About</a>
+      <a href="faq.html" class="foot-link" style="color:rgba(255,255,255,0.5);" data-lang="foot.faq">FAQ</a>
+    </div>
+    <div class="foot-copy" style="color:rgba(255,255,255,0.3);" data-lang="foot.copy">© 2026 Peri Music Ltd. · Thailand</div>
+  </div>
+</footer>
+
+<script src="lang.js"></script>
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  function toggle(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+    // close all
+    document.querySelectorAll('.faq-a.open').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-q.open').forEach(q => q.classList.remove('open'));
+    if (!isOpen) {
+      answer.classList.add('open');
+      btn.classList.add('open');
+    }
+  }
+
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.faq-nav-link').forEach(l => l.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  // ── Italic em fade-in ──
+  const emObs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('em-revealed'); o.unobserve(e.target); }});
+  }, {threshold:0.25});
+  document.querySelectorAll('.s-title, .hero-h1').forEach(el => emObs.observe(el));
+</script>
+</body>
+</html>
