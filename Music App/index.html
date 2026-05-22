@@ -44,8 +44,7 @@
     .nav-cta {
       font-size: 12px; font-weight: 500; padding: 9px 20px;
       border-radius: 999px; background: rgba(180,83,9,0.88); color: #fff;
-      border: 0.5px solid rgba(255,255,255,0.52);
-      box-shadow: var(--glass-inner), 0 10px 24px rgba(180,83,9,0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 2px 8px rgba(180,83,9,0.28);
       transition: opacity 0.15s, transform 0.15s;
     }
     .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
@@ -148,11 +147,11 @@
     .hero-btn-primary {
       padding: 14px 32px; background: rgba(180,83,9,0.9); color: #fff;
       border-radius: 999px; font-size: 14px; font-weight: 600;
-      border: 0.5px solid rgba(255,255,255,0.58); cursor: pointer; font-family: 'Inter', sans-serif;
-      box-shadow: var(--glass-inner), 0 16px 34px rgba(180,83,9,0.22);
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 4px 14px rgba(180,83,9,0.32);
       transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
     }
-    .hero-btn-primary:hover { background: #92400E; transform: translateY(-2px); box-shadow: var(--glass-inner), 0 20px 42px rgba(180,83,9,0.26); }
+    .hero-btn-primary:hover { background: #92400E; transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 22px rgba(180,83,9,0.38); }
     .hero-btn-ghost {
       padding: 14px 28px; color: #1C1917; font-size: 14px;
       border: 0.5px solid var(--glass-border); border-radius: 999px;
@@ -407,7 +406,9 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 20px; font-weight: 600; flex-shrink: 0;
       box-shadow: 0 4px 14px rgba(180,83,9,0.25);
+      overflow: hidden;
     }
+    .tc-av img { width: 100%; height: 100%; object-fit: cover; object-position: center top; border-radius: 50%; }
     .tc-headinfo {}
     .tc-name {
       font-size: 16px; font-weight: 600; color: var(--text);
@@ -435,8 +436,8 @@
       display: block; width: 100%; margin-top: 16px; padding: 11px;
       background: rgba(180,83,9,0.9); color: #fff; border-radius: 999px;
       font-size: 13px; font-weight: 500; text-align: center;
-      border: 0.5px solid rgba(255,255,255,0.55); cursor: pointer; font-family: 'Inter', sans-serif;
-      box-shadow: var(--glass-inner), 0 10px 22px rgba(180,83,9,0.16);
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 2px 8px rgba(180,83,9,0.28);
       transition: opacity 0.15s, transform 0.15s;
     }
     .tc-cta:hover { opacity: 0.92; transform: translateY(-1px); }
@@ -564,6 +565,7 @@
       .hc { border-right: 0.5px solid var(--border); }
       .why-layout { grid-template-columns: 1fr; gap: 40px; }
       .cta-inner { flex-direction: column; align-items: flex-start; }
+      #format > .wrap > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
     }
     @media (max-width: 600px) {
       .s { padding: 56px 24px; }
@@ -572,6 +574,7 @@
       .hero-btn-primary, .hero-btn-ghost { width: 100%; }
       .dyn-strip { flex-direction: column; padding: 8px 24px; }
       .tutors-grid { grid-template-columns: 1fr; }
+      #format { padding: 56px 24px 64px !important; }
     }
   </style>
 </head>
@@ -581,13 +584,48 @@
 <nav class="nav" id="mainNav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">peri<span class="clef">𝄞</span></a>
-    <a href="tutors.html" class="nav-link" data-lang="nav.instru">Instruments</a>
-    <a href="tutors.html" class="nav-link" data-lang="nav.tutors">Tutors</a>
-    <a href="about.html" class="nav-link" data-lang="nav.about">About</a>
-    <a href="teach.html" class="nav-link" data-lang="nav.teach">Teach on Peri</a>
+    <div class="nav-item">
+      <a href="index.html#how" class="nav-link" data-lang="nav.how">How it works</a>
+      <div class="nav-dropdown">
+        <a href="index.html#how" class="nav-drop-link"><span class="nav-drop-icon">✦</span><span data-lang="nav.d.how">How Peri works</span></a>
+        <a href="levels.html" class="nav-drop-link"><span class="nav-drop-icon">📊</span><span data-lang="nav.d.levels">Learning levels</span></a>
+        <div class="nav-drop-divider"></div>
+        <a href="faq.html" class="nav-drop-link"><span class="nav-drop-icon">❓</span><span data-lang="nav.d.faq">FAQ</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="tutors.html" class="nav-link" data-lang="nav.tutors">Find a tutor</a>
+      <div class="nav-dropdown">
+        <a href="tutors.html" class="nav-drop-link"><span class="nav-drop-icon">🔍</span><span data-lang="nav.d.all">Browse all tutors</span></a>
+        <div class="nav-drop-divider"></div>
+        <a href="tutors.html#Piano" class="nav-drop-link"><span class="nav-drop-icon">🎹</span><span data-lang="inst.piano">Piano</span></a>
+        <a href="tutors.html#Violin" class="nav-drop-link"><span class="nav-drop-icon">🎻</span><span data-lang="inst.violin">Violin</span></a>
+        <a href="tutors.html#Guitar" class="nav-drop-link"><span class="nav-drop-icon">🎸</span><span data-lang="inst.cguitar">Guitar</span></a>
+        <a href="tutors.html#Voice" class="nav-drop-link"><span class="nav-drop-icon">🎤</span><span data-lang="inst.voice">Voice</span></a>
+        <a href="tutors.html#Drums" class="nav-drop-link"><span class="nav-drop-icon">🥁</span><span data-lang="inst.drums">Drums</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="about.html" class="nav-link" data-lang="nav.about">About</a>
+      <div class="nav-dropdown">
+        <a href="about.html" class="nav-drop-link"><span class="nav-drop-icon">📖</span><span data-lang="nav.d.story">Our story</span></a>
+        <a href="about.html#values" class="nav-drop-link"><span class="nav-drop-icon">💡</span><span data-lang="nav.d.values">Our values</span></a>
+        <div class="nav-drop-divider"></div>
+        <a href="faq.html" class="nav-drop-link"><span class="nav-drop-icon">❓</span><span data-lang="nav.d.faq">FAQ</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="teach.html" class="nav-link" data-lang="nav.teach">Teach on Peri</a>
+      <div class="nav-dropdown">
+        <a href="teach.html" class="nav-drop-link"><span class="nav-drop-icon">✦</span><span data-lang="nav.d.teach.ov">Teaching on Peri</span></a>
+        <a href="teach.html#apply" class="nav-drop-link"><span class="nav-drop-icon">📝</span><span data-lang="nav.d.apply">Apply to teach</span></a>
+        <div class="nav-drop-divider"></div>
+        <a href="faq.html#tutors" class="nav-drop-link"><span class="nav-drop-icon">❓</span><span data-lang="nav.d.tfaq">Tutor FAQ</span></a>
+      </div>
+    </div>
     <div class="lang-toggle">
-      <button class="lang-btn active" data-lang-switcher="en" onclick="window.Peri.setLang('en')">EN</button>
-      <button class="lang-btn" data-lang-switcher="th" onclick="window.Peri.setLang('th')">ไทย</button>
+      <button class="lang-btn active" data-setlang="en" onclick="window.Peri.setLang('en')">EN</button>
+      <button class="lang-btn" data-setlang="th" onclick="window.Peri.setLang('th')">ไทย</button>
     </div>
     <a href="tutors.html" class="nav-cta" data-lang="nav.cta.alt">Find a tutor</a>
   </div>
@@ -807,6 +845,88 @@
   </div>
 </section>
 
+<!-- ═══ FORMAT SECTION ═══ -->
+<section id="format" style="padding: 72px 48px 80px; background: linear-gradient(180deg, #F7F4F0 0%, #F2EDE6 100%);">
+  <div class="wrap" style="max-width:1120px; margin:0 auto;">
+    <p class="s-label" style="text-align:center; margin-bottom:12px;" data-lang="idx.fmt.label">Lesson format</p>
+    <h2 class="s-title" style="text-align:center; margin-bottom:48px;" data-lang-html="idx.fmt.title">Online <em>or</em> in-person — your choice</h2>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:860px; margin:0 auto;">
+
+      <!-- Online card -->
+      <div style="
+        background: rgba(255,255,255,0.58);
+        border: 0.5px solid rgba(255,255,255,0.80);
+        border-radius: 22px;
+        padding: 36px 32px 32px;
+        backdrop-filter: blur(20px) saturate(1.3);
+        -webkit-backdrop-filter: blur(20px) saturate(1.3);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.92), inset 0 -1px 0 rgba(0,0,0,0.03), 0 8px 32px rgba(92,64,37,0.09);
+        display: flex; flex-direction: column; gap: 14px;
+        transition: transform 0.2s, box-shadow 0.2s;
+      " onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='inset 0 1px 0 rgba(255,255,255,0.92),inset 0 -1px 0 rgba(0,0,0,0.03),0 18px 48px rgba(92,64,37,0.14)'"
+         onmouseleave="this.style.transform='';this.style.boxShadow='inset 0 1px 0 rgba(255,255,255,0.92),inset 0 -1px 0 rgba(0,0,0,0.03),0 8px 32px rgba(92,64,37,0.09)'">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="
+            width:48px; height:48px; border-radius:14px; flex-shrink:0;
+            background: linear-gradient(135deg, rgba(254,243,199,0.9), rgba(253,230,138,0.7));
+            border: 0.5px solid rgba(180,83,9,0.15);
+            display:flex; align-items:center; justify-content:center;
+            font-size:22px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
+          ">🖥️</div>
+          <div>
+            <span style="display:inline-block; font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber-text); background:rgba(254,243,199,0.72); border:0.5px solid rgba(180,83,9,0.18); border-radius:999px; padding:3px 10px; margin-bottom:5px;" data-lang="idx.fmt.online.tag">Online</span>
+            <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.45rem; font-weight:500; letter-spacing:-0.02em; color:var(--dark); line-height:1.2;" data-lang="idx.fmt.online.h">Learn from anywhere</h3>
+          </div>
+        </div>
+        <p style="font-size:13.5px; color:var(--text-3); line-height:1.75;" data-lang="idx.fmt.online.d">Every tutor on Peri teaches via Zoom or Google Meet. All you need is a device and an internet connection — whether you're in Bangkok, Chiang Mai, or anywhere else in Thailand.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;">
+          <span style="font-size:11px; color:var(--text-3); background:rgba(255,255,255,0.6); border:0.5px solid var(--border); border-radius:999px; padding:4px 12px;">✓ Zoom &amp; Google Meet</span>
+          <span style="font-size:11px; color:var(--text-3); background:rgba(255,255,255,0.6); border:0.5px solid var(--border); border-radius:999px; padding:4px 12px;">✓ Flexible scheduling</span>
+          <span style="font-size:11px; color:var(--text-3); background:rgba(255,255,255,0.6); border:0.5px solid var(--border); border-radius:999px; padding:4px 12px;">✓ All tutors available</span>
+        </div>
+      </div>
+
+      <!-- In-person card -->
+      <div style="
+        background: rgba(255,255,255,0.58);
+        border: 0.5px solid rgba(255,255,255,0.80);
+        border-radius: 22px;
+        padding: 36px 32px 32px;
+        backdrop-filter: blur(20px) saturate(1.3);
+        -webkit-backdrop-filter: blur(20px) saturate(1.3);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.92), inset 0 -1px 0 rgba(0,0,0,0.03), 0 8px 32px rgba(92,64,37,0.09);
+        display: flex; flex-direction: column; gap: 14px;
+        transition: transform 0.2s, box-shadow 0.2s;
+      " onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='inset 0 1px 0 rgba(255,255,255,0.92),inset 0 -1px 0 rgba(0,0,0,0.03),0 18px 48px rgba(92,64,37,0.14)'"
+         onmouseleave="this.style.transform='';this.style.boxShadow='inset 0 1px 0 rgba(255,255,255,0.92),inset 0 -1px 0 rgba(0,0,0,0.03),0 8px 32px rgba(92,64,37,0.09)'">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="
+            width:48px; height:48px; border-radius:14px; flex-shrink:0;
+            background: linear-gradient(135deg, rgba(254,243,199,0.9), rgba(253,230,138,0.7));
+            border: 0.5px solid rgba(180,83,9,0.15);
+            display:flex; align-items:center; justify-content:center;
+            font-size:22px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
+          ">🤝</div>
+          <div>
+            <span style="display:inline-block; font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#166534; background:rgba(220,252,231,0.72); border:0.5px solid rgba(22,163,74,0.18); border-radius:999px; padding:3px 10px; margin-bottom:5px;" data-lang="idx.fmt.person.tag">In-person</span>
+            <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.45rem; font-weight:500; letter-spacing:-0.02em; color:var(--dark); line-height:1.2;" data-lang="idx.fmt.person.h">Meet face-to-face</h3>
+          </div>
+        </div>
+        <p style="font-size:13.5px; color:var(--text-3); line-height:1.75;" data-lang="idx.fmt.person.d">Select tutors offer in-person lessons in Bangkok and Chiang Mai. Look for the "In-person" badge on tutor profiles to find someone near you.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;">
+          <span style="font-size:11px; color:var(--text-3); background:rgba(255,255,255,0.6); border:0.5px solid var(--border); border-radius:999px; padding:4px 12px;">📍 Bangkok</span>
+          <span style="font-size:11px; color:var(--text-3); background:rgba(255,255,255,0.6); border:0.5px solid var(--border); border-radius:999px; padding:4px 12px;">📍 Chiang Mai</span>
+          <span style="font-size:11px; color:var(--text-3); background:rgba(255,255,255,0.6); border:0.5px solid var(--border); border-radius:999px; padding:4px 12px;">✓ Select tutors</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ═══ TUTORS ═══ -->
 <section class="s" id="tutors" style="background:#F7F4F0; border-bottom:0.5px solid var(--border);">
   <div class="wrap">
@@ -898,6 +1018,34 @@
           <div class="tc-footer">
             <div class="tc-price">฿500 / hr</div>
             <div class="tc-pill"><div class="tc-dot"></div><span data-lang="idx.tut.online">Online</span></div>
+          </div>
+          <button class="tc-cta" data-lang="idx.tut.cta">Request intro call →</button>
+        </div>
+      </a>
+
+      <!-- Card 4: Cello -->
+      <a href="kesara.html" class="tc" data-inst="cello">
+        <div class="tc-head">
+          <div class="tc-av"><img src="kesara.jpg" alt="Kesara Bunayamongkol"/></div>
+          <div class="tc-headinfo">
+            <div class="tc-name">Kesara Bunayamongkol</div>
+            <div class="tc-inst-label">Cello · 6+ yrs experience</div>
+            <div class="tc-stars">★★★★★ <span class="tc-reviews">New</span></div>
+          </div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-tags">
+            <span class="tc-tag">ABRSM</span>
+            <span class="tc-tag">Suzuki</span>
+            <span class="tc-tag">RCM · SFCM</span>
+            <span class="tc-tag">All ages</span>
+          </div>
+          <div style="margin-bottom:12px;">
+            <span class="tc-lang-badge">🇬🇧 English</span>
+          </div>
+          <div class="tc-footer">
+            <div class="tc-price">฿1,200 / hr</div>
+            <div class="tc-pill"><div class="tc-dot"></div><span data-lang="idx.tut.online">Online + In-person</span></div>
           </div>
           <button class="tc-cta" data-lang="idx.tut.cta">Request intro call →</button>
         </div>

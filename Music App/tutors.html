@@ -95,15 +95,40 @@
     }
     .search-input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(180,83,9,0.08); }
     .filter-toggles { display: flex; gap: 8px; flex-shrink: 0; }
+    .filter-group { position: relative; }
     .filter-pill {
       display: flex; align-items: center; gap: 6px;
       padding: 9px 16px; border-radius: 999px;
       border: 1px solid var(--border); background: #fff;
       font-size: 12px; font-family: 'Inter', sans-serif;
       color: var(--text-2); cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      white-space: nowrap; user-select: none;
     }
     .filter-pill:hover { border-color: rgba(180,83,9,0.22); }
+    .filter-pill.active { background: var(--amber); color: #fff; border-color: var(--amber); }
+    .fp-caret { font-size: 9px; opacity: 0.55; transition: transform 0.2s; }
+    .filter-group.open .fp-caret { transform: rotate(180deg); }
+    .filter-dropdown {
+      display: none; position: absolute; top: calc(100% + 8px); left: 0;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 14px; box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      padding: 6px; min-width: 192px; z-index: 200;
+    }
+    .filter-group.open .filter-dropdown { display: block; }
+    .fd-opt {
+      display: flex; align-items: center; gap: 9px;
+      padding: 9px 12px; border-radius: 9px;
+      font-size: 12.5px; font-family: 'Inter', sans-serif;
+      color: var(--text-2); cursor: pointer; transition: background 0.12s;
+    }
+    .fd-opt:hover { background: #FAF8F6; }
+    .fd-opt.on { background: var(--amber-pale); color: var(--amber-text); font-weight: 500; }
+    .fd-check {
+      width: 15px; height: 15px; border-radius: 50%;
+      border: 1.5px solid var(--border); flex-shrink: 0; transition: all 0.15s;
+    }
+    .fd-opt.on .fd-check { background: var(--amber); border-color: var(--amber); }
     .results-meta {
       font-size: 12px; color: var(--text-4); flex-shrink: 0;
       white-space: nowrap;
@@ -157,6 +182,19 @@
     .tc-band-bg.v6 { background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%); }
     .tc-band-bg.v7 { background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); }
     .tc-band-bg.v8 { background: linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%); }
+
+    /* photo band — real image fills the header */
+    .tc-band-photo {
+      height: 168px;
+      background-size: cover;
+      background-position: center 15%;
+    }
+    .tc-band-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.04) 40%, rgba(255,255,255,0.55) 100%);
+      pointer-events: none;
+    }
 
     /* avatar fully inside the band, centred */
     .tc-av {
@@ -289,13 +327,48 @@
 <nav class="nav scrolled" id="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">peri<span class="clef">𝄞</span></a>
-    <a href="index.html#how" class="nav-link" data-lang="nav.how">How it works</a>
-    <a href="tutors.html" class="nav-link active" data-lang="nav.tutors">Find a tutor</a>
-    <a href="about.html" class="nav-link" data-lang="nav.about">About</a>
-    <a href="teach.html" class="nav-link" data-lang="nav.teach">Teach on Peri</a>
+    <div class="nav-item">
+      <a href="index.html#how" class="nav-link" data-lang="nav.how">How it works</a>
+      <div class="nav-dropdown">
+        <a href="index.html#how" class="nav-drop-link"><span class="nav-drop-icon">✦</span><span data-lang="nav.d.how">How Peri works</span></a>
+        <a href="levels.html" class="nav-drop-link"><span class="nav-drop-icon">📊</span><span data-lang="nav.d.levels">Learning levels</span></a>
+        <div class="nav-drop-divider"></div>
+        <a href="faq.html" class="nav-drop-link"><span class="nav-drop-icon">❓</span><span data-lang="nav.d.faq">FAQ</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="tutors.html" class="nav-link active" data-lang="nav.tutors">Find a tutor</a>
+      <div class="nav-dropdown">
+        <a href="tutors.html" class="nav-drop-link"><span class="nav-drop-icon">🔍</span><span data-lang="nav.d.all">Browse all tutors</span></a>
+        <div class="nav-drop-divider"></div>
+        <a href="tutors.html#Piano" class="nav-drop-link"><span class="nav-drop-icon">🎹</span><span data-lang="inst.piano">Piano</span></a>
+        <a href="tutors.html#Violin" class="nav-drop-link"><span class="nav-drop-icon">🎻</span><span data-lang="inst.violin">Violin</span></a>
+        <a href="tutors.html#Guitar" class="nav-drop-link"><span class="nav-drop-icon">🎸</span><span data-lang="inst.cguitar">Guitar</span></a>
+        <a href="tutors.html#Voice" class="nav-drop-link"><span class="nav-drop-icon">🎤</span><span data-lang="inst.voice">Voice</span></a>
+        <a href="tutors.html#Drums" class="nav-drop-link"><span class="nav-drop-icon">🥁</span><span data-lang="inst.drums">Drums</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="about.html" class="nav-link" data-lang="nav.about">About</a>
+      <div class="nav-dropdown">
+        <a href="about.html" class="nav-drop-link"><span class="nav-drop-icon">📖</span><span data-lang="nav.d.story">Our story</span></a>
+        <a href="about.html#values" class="nav-drop-link"><span class="nav-drop-icon">💡</span><span data-lang="nav.d.values">Our values</span></a>
+        <div class="nav-drop-divider"></div>
+        <a href="faq.html" class="nav-drop-link"><span class="nav-drop-icon">❓</span><span data-lang="nav.d.faq">FAQ</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="teach.html" class="nav-link" data-lang="nav.teach">Teach on Peri</a>
+      <div class="nav-dropdown">
+        <a href="teach.html" class="nav-drop-link"><span class="nav-drop-icon">✦</span><span data-lang="nav.d.teach.ov">Teaching on Peri</span></a>
+        <a href="teach.html#apply" class="nav-drop-link"><span class="nav-drop-icon">📝</span><span data-lang="nav.d.apply">Apply to teach</span></a>
+        <div class="nav-drop-divider"></div>
+        <a href="faq.html#tutors" class="nav-drop-link"><span class="nav-drop-icon">❓</span><span data-lang="nav.d.tfaq">Tutor FAQ</span></a>
+      </div>
+    </div>
     <div class="lang-toggle">
-      <button class="lang-btn active" data-lang="en" onclick="window.Peri.setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="th" onclick="window.Peri.setLang('th')">ไทย</button>
+      <button class="lang-btn active" data-setlang="en" onclick="window.Peri.setLang('en')">EN</button>
+      <button class="lang-btn" data-setlang="th" onclick="window.Peri.setLang('th')">ไทย</button>
     </div>
     <a href="tutors.html" class="nav-btn" data-lang="nav.cta">Get started</a>
   </div>
@@ -338,9 +411,34 @@
              oninput="filterCards()"/>
     </div>
     <div class="filter-toggles">
-      <button class="filter-pill" data-lang="tut.fil.avail">⚡ Availability</button>
-      <button class="filter-pill" data-lang="tut.fil.price">฿ Price</button>
-      <button class="filter-pill" data-lang="tut.fil.level">◈ Level</button>
+
+      <!-- Degree filter -->
+      <div class="filter-group" id="fgDegree">
+        <button class="filter-pill" onclick="toggleFilter('fgDegree')">
+          🎓 <span id="fpDegreeLabel">Degree</span> <span class="fp-caret">▾</span>
+        </button>
+        <div class="filter-dropdown">
+          <div class="fd-opt on" data-val="all" onclick="setFilter('degree','all','fgDegree','fpDegreeLabel','Degree')"><div class="fd-check"></div>Any degree</div>
+          <div class="fd-opt" data-val="masters" onclick="setFilter('degree','masters','fgDegree','fpDegreeLabel','Masters+')"><div class="fd-check"></div>Masters or higher</div>
+          <div class="fd-opt" data-val="bachelor" onclick="setFilter('degree','bachelor','fgDegree','fpDegreeLabel','Bachelor')"><div class="fd-check"></div>Bachelor's degree</div>
+          <div class="fd-opt" data-val="diploma" onclick="setFilter('degree','diploma','fgDegree','fpDegreeLabel','Diploma')"><div class="fd-check"></div>Diploma / Certificate</div>
+        </div>
+      </div>
+
+      <!-- Experience filter -->
+      <div class="filter-group" id="fgYears">
+        <button class="filter-pill" onclick="toggleFilter('fgYears')">
+          ⏱ <span id="fpYearsLabel">Experience</span> <span class="fp-caret">▾</span>
+        </button>
+        <div class="filter-dropdown">
+          <div class="fd-opt on" data-val="all" onclick="setFilter('years','all','fgYears','fpYearsLabel','Experience')"><div class="fd-check"></div>Any experience</div>
+          <div class="fd-opt" data-val="1-3" onclick="setFilter('years','1-3','fgYears','fpYearsLabel','1–3 yrs')"><div class="fd-check"></div>1–3 years</div>
+          <div class="fd-opt" data-val="3-7" onclick="setFilter('years','3-7','fgYears','fpYearsLabel','3–7 yrs')"><div class="fd-check"></div>3–7 years</div>
+          <div class="fd-opt" data-val="7plus" onclick="setFilter('years','7plus','fgYears','fpYearsLabel','7+ yrs')"><div class="fd-check"></div>7+ years</div>
+        </div>
+      </div>
+
+      <button class="filter-pill">฿ Price</button>
     </div>
     <div class="results-meta"><strong id="resultCount">8</strong> tutors</div>
   </div>
@@ -351,7 +449,7 @@
   <div class="tc-grid" id="tutorGrid">
 
     <!-- Nattaya Srisuk — Piano — Bilingual -->
-    <a href="tutor.html" class="tc-card" data-instrument="Piano" data-name="Nattaya Srisuk">
+    <a href="tutor.html" class="tc-card" data-instrument="Piano" data-name="Nattaya Srisuk" data-degree="bachelor" data-years="5">
       <div class="tc-band">
         <div class="tc-band-bg v1"></div>
         <span class="tc-online"><span class="tc-online-dot"></span><span data-lang="tut.active">Active now</span></span>
@@ -369,7 +467,10 @@
           <span class="tc-level-label" data-lang="tut.levels">Levels</span>
           <span class="tc-level-range">pp → mf</span>
         </div>
-        <span class="tc-lang-badge bilingual" data-lang="lang.both">🇹🇭🇬🇧 Bilingual</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
+          <span class="tc-lang-badge bilingual" data-lang="lang.both">🇹🇭🇬🇧 Bilingual</span>
+          <span class="tc-lang-badge" style="background:rgba(220,252,231,0.72);color:#166534;border-color:rgba(22,101,52,0.2);">Bachelor's degree</span>
+        </div>
       </div>
       <div class="tc-footer">
         <div class="tc-price">฿600 <span>/hr</span></div>
@@ -379,7 +480,7 @@
     </a>
 
     <!-- Chaiwat Phanit — Violin — Thai only -->
-    <a href="tutor.html" class="tc-card" data-instrument="Violin" data-name="Chaiwat Phanit">
+    <a href="tutor.html" class="tc-card" data-instrument="Violin" data-name="Chaiwat Phanit" data-degree="diploma" data-years="8">
       <div class="tc-band">
         <div class="tc-band-bg v2"></div>
         <span class="tc-online"><span class="tc-online-dot"></span><span data-lang="tut.active">Active now</span></span>
@@ -397,7 +498,10 @@
           <span class="tc-level-label" data-lang="tut.levels">Levels</span>
           <span class="tc-level-range">p → ff</span>
         </div>
-        <span class="tc-lang-badge" data-lang="lang.th">🇹🇭 Thai</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
+          <span class="tc-lang-badge" data-lang="lang.th">🇹🇭 Thai</span>
+          <span class="tc-lang-badge" style="background:rgba(243,244,246,0.9);color:#374151;border-color:rgba(107,114,128,0.2);">Diploma</span>
+        </div>
       </div>
       <div class="tc-footer">
         <div class="tc-price">฿750 <span>/hr</span></div>
@@ -407,7 +511,7 @@
     </a>
 
     <!-- Siriporn Vacharakul — Cello — Bilingual -->
-    <a href="tutor.html" class="tc-card" data-instrument="Cello" data-name="Siriporn Vacharakul">
+    <a href="tutor.html" class="tc-card" data-instrument="Cello" data-name="Siriporn Vacharakul" data-degree="bachelor" data-years="4">
       <div class="tc-band">
         <div class="tc-band-bg v4"></div>
         <span class="tc-online"><span class="tc-online-dot"></span><span data-lang="tut.active">Active now</span></span>
@@ -424,7 +528,10 @@
           <span class="tc-level-label" data-lang="tut.levels">Levels</span>
           <span class="tc-level-range">pp → f</span>
         </div>
-        <span class="tc-lang-badge bilingual" data-lang="lang.both">🇹🇭🇬🇧 Bilingual</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
+          <span class="tc-lang-badge bilingual" data-lang="lang.both">🇹🇭🇬🇧 Bilingual</span>
+          <span class="tc-lang-badge" style="background:rgba(220,252,231,0.72);color:#166534;border-color:rgba(22,101,52,0.2);">Bachelor's degree</span>
+        </div>
       </div>
       <div class="tc-footer">
         <div class="tc-price">฿820 <span>/hr</span></div>
@@ -433,8 +540,38 @@
       </div>
     </a>
 
+    <!-- Kesara Bunayamongkol — Cello — English -->
+    <a href="kesara.html" class="tc-card" data-instrument="Cello" data-name="Kesara Bunayamongkol" data-degree="masters" data-years="6">
+      <div class="tc-band tc-band-photo" style="background-image: url('kesara.jpg');">
+        <span class="tc-online" style="z-index:4;"><span class="tc-online-dot"></span><span data-lang="tut.active">Active now</span></span>
+        <div class="tc-level-badge" style="color:rgba(255,255,255,0.85); text-shadow:0 1px 3px rgba(0,0,0,0.4);">ff</div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-name">Kesara Bunayamongkol</div>
+        <div class="tc-instrument" data-lang="inst.cello">Cello</div>
+        <div class="tc-meta">
+          <span>Bangkok</span><span class="tc-meta-sep">·</span>
+          <span data-lang="tut.both">Online + In-person</span>
+        </div>
+        <div class="tc-level-row">
+          <span class="tc-level-label" data-lang="tut.levels">Levels</span>
+          <span class="tc-level-range">pp → ff</span>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-top:6px;">
+          <span class="tc-lang-badge">🇬🇧 English</span>
+          <span class="tc-lang-badge" style="background:rgba(219,234,254,0.72);color:#1e40af;border-color:rgba(37,99,235,0.18);">Masters degree</span>
+          <span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 9px;border-radius:999px;background:linear-gradient(135deg,#C2610A,#7C3A05);color:#FDE68A;box-shadow:0 2px 6px rgba(180,83,9,0.3);letter-spacing:0.04em;">★ Star Tutor</span>
+        </div>
+      </div>
+      <div class="tc-footer">
+        <div class="tc-price">฿1,200 <span>/hr</span></div>
+        <div class="tc-rating"><span class="tc-stars">★</span> New</div>
+        <div class="tc-cta" data-lang="tut.cta">Book intro →</div>
+      </div>
+    </a>
+
     <!-- Priya Worakul — Classical Guitar — English only -->
-    <a href="tutor.html" class="tc-card" data-instrument="Guitar" data-name="Priya Worakul">
+    <a href="tutor.html" class="tc-card" data-instrument="Guitar" data-name="Priya Worakul" data-degree="bachelor" data-years="3">
       <div class="tc-band">
         <div class="tc-band-bg v3"></div>
         <span class="tc-online"><span class="tc-online-dot"></span><span data-lang="tut.active">Active now</span></span>
@@ -452,7 +589,10 @@
           <span class="tc-level-label" data-lang="tut.levels">Levels</span>
           <span class="tc-level-range">pp → p</span>
         </div>
-        <span class="tc-lang-badge" data-lang="lang.en">🇬🇧 English</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
+          <span class="tc-lang-badge" data-lang="lang.en">🇬🇧 English</span>
+          <span class="tc-lang-badge" style="background:rgba(220,252,231,0.72);color:#166534;border-color:rgba(22,101,52,0.2);">Bachelor's degree</span>
+        </div>
       </div>
       <div class="tc-footer">
         <div class="tc-price">฿500 <span>/hr</span></div>
@@ -462,7 +602,7 @@
     </a>
 
     <!-- Boonsong Lertwong — Piano & Theory — Thai only -->
-    <a href="tutor.html" class="tc-card" data-instrument="Piano" data-name="Boonsong Lertwong">
+    <a href="tutor.html" class="tc-card" data-instrument="Piano" data-name="Boonsong Lertwong" data-degree="diploma" data-years="12">
       <div class="tc-band">
         <div class="tc-band-bg v8"></div>
         <span class="tc-online"><span class="tc-online-dot"></span><span data-lang="tut.active">Active now</span></span>
@@ -480,7 +620,10 @@
           <span class="tc-level-label" data-lang="tut.levels">Levels</span>
           <span class="tc-level-range">mf → ff</span>
         </div>
-        <span class="tc-lang-badge" data-lang="lang.th">🇹🇭 Thai</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
+          <span class="tc-lang-badge" data-lang="lang.th">🇹🇭 Thai</span>
+          <span class="tc-lang-badge" style="background:rgba(243,244,246,0.9);color:#374151;border-color:rgba(107,114,128,0.2);">Diploma</span>
+        </div>
       </div>
       <div class="tc-footer">
         <div class="tc-price">฿700 <span>/hr</span></div>
@@ -490,7 +633,7 @@
     </a>
 
     <!-- Manee Thipsakul — Voice — Bilingual -->
-    <a href="tutor.html" class="tc-card" data-instrument="Voice" data-name="Manee Thipsakul">
+    <a href="tutor.html" class="tc-card" data-instrument="Voice" data-name="Manee Thipsakul" data-degree="bachelor" data-years="7">
       <div class="tc-band">
         <div class="tc-band-bg v3"></div>
         <span class="tc-online"><span class="tc-online-dot"></span><span data-lang="tut.active">Active now</span></span>
@@ -508,7 +651,10 @@
           <span class="tc-level-label" data-lang="tut.levels">Levels</span>
           <span class="tc-level-range">pp → mf</span>
         </div>
-        <span class="tc-lang-badge bilingual" data-lang="lang.both">🇹🇭🇬🇧 Bilingual</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
+          <span class="tc-lang-badge bilingual" data-lang="lang.both">🇹🇭🇬🇧 Bilingual</span>
+          <span class="tc-lang-badge" style="background:rgba(220,252,231,0.72);color:#166534;border-color:rgba(22,101,52,0.2);">Bachelor's degree</span>
+        </div>
       </div>
       <div class="tc-footer">
         <div class="tc-price">฿550 <span>/hr</span></div>
@@ -518,7 +664,7 @@
     </a>
 
     <!-- Apinya Rungrot — Saxophone — English only -->
-    <a href="tutor.html" class="tc-card" data-instrument="Saxophone" data-name="Apinya Rungrot">
+    <a href="tutor.html" class="tc-card" data-instrument="Saxophone" data-name="Apinya Rungrot" data-degree="bachelor" data-years="5">
       <div class="tc-band">
         <div class="tc-band-bg v5"></div>
         <span class="tc-online"><span class="tc-online-dot"></span><span data-lang="tut.active">Active now</span></span>
@@ -535,7 +681,10 @@
           <span class="tc-level-label" data-lang="tut.levels">Levels</span>
           <span class="tc-level-range">p → f</span>
         </div>
-        <span class="tc-lang-badge" data-lang="lang.en">🇬🇧 English</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
+          <span class="tc-lang-badge" data-lang="lang.en">🇬🇧 English</span>
+          <span class="tc-lang-badge" style="background:rgba(220,252,231,0.72);color:#166534;border-color:rgba(22,101,52,0.2);">Bachelor's degree</span>
+        </div>
       </div>
       <div class="tc-footer">
         <div class="tc-price">฿680 <span>/hr</span></div>
@@ -545,7 +694,7 @@
     </a>
 
     <!-- Krit Thanarom — Drums — Thai only -->
-    <a href="tutor.html" class="tc-card" data-instrument="Drums" data-name="Krit Thanarom">
+    <a href="tutor.html" class="tc-card" data-instrument="Drums" data-name="Krit Thanarom" data-degree="diploma" data-years="4">
       <div class="tc-band">
         <div class="tc-band-bg v6"></div>
         <span class="tc-online"><span class="tc-online-dot"></span><span data-lang="tut.active">Active now</span></span>
@@ -563,7 +712,10 @@
           <span class="tc-level-label" data-lang="tut.levels">Levels</span>
           <span class="tc-level-range">pp → p</span>
         </div>
-        <span class="tc-lang-badge" data-lang="lang.th">🇹🇭 Thai</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
+          <span class="tc-lang-badge" data-lang="lang.th">🇹🇭 Thai</span>
+          <span class="tc-lang-badge" style="background:rgba(243,244,246,0.9);color:#374151;border-color:rgba(107,114,128,0.2);">Diploma</span>
+        </div>
       </div>
       <div class="tc-footer">
         <div class="tc-price">฿450 <span>/hr</span></div>
@@ -600,11 +752,50 @@
 <script src="lang.js"></script>
 <script>
   let activeInst = 'all';
+  let activeDegree = 'all';
+  let activeYears = 'all';
+
+  // Pre-filter from nav dropdown hash links (e.g. tutors.html#Piano)
+  (function() {
+    const hash = window.location.hash.replace('#', '');
+    const valid = ['Piano','Violin','Cello','Guitar','Voice','Drums','Trumpet','Saxophone','Flute','Theory'];
+    if (valid.includes(hash)) {
+      activeInst = hash;
+      window.addEventListener('DOMContentLoaded', () => {
+        const btn = document.querySelector(`.inst-f[data-inst="${hash}"]`);
+        if (btn) { document.querySelectorAll('.inst-f').forEach(b => b.classList.remove('on')); btn.classList.add('on'); }
+        filterCards();
+      });
+    }
+  })();
 
   function setInst(el, inst) {
     document.querySelectorAll('.inst-f').forEach(b => b.classList.remove('on'));
     el.classList.add('on');
     activeInst = inst;
+    filterCards();
+  }
+
+  function toggleFilter(groupId) {
+    const group = document.getElementById(groupId);
+    const isOpen = group.classList.contains('open');
+    document.querySelectorAll('.filter-group.open').forEach(g => g.classList.remove('open'));
+    if (!isOpen) group.classList.add('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.filter-group')) {
+      document.querySelectorAll('.filter-group.open').forEach(g => g.classList.remove('open'));
+    }
+  });
+
+  function setFilter(type, val, groupId, labelId, labelText) {
+    if (type === 'degree') activeDegree = val;
+    if (type === 'years') activeYears = val;
+    const group = document.getElementById(groupId);
+    group.querySelectorAll('.fd-opt').forEach(o => o.classList.toggle('on', o.dataset.val === val));
+    document.getElementById(labelId).textContent = labelText;
+    group.querySelector('.filter-pill').classList.toggle('active', val !== 'all');
+    group.classList.remove('open');
     filterCards();
   }
 
@@ -614,10 +805,28 @@
     let visible = 0;
     cards.forEach(card => {
       const instr = card.dataset.instrument || '';
-      const name = card.dataset.name || '';
+      const name  = card.dataset.name || '';
+      const deg   = card.dataset.degree || '';
+      const yrs   = parseInt(card.dataset.years || '0', 10);
+
       const matchInst = activeInst === 'all' || instr === activeInst;
-      const matchQ = !q || name.toLowerCase().includes(q) || instr.toLowerCase().includes(q) || card.textContent.toLowerCase().includes(q);
-      const show = matchInst && matchQ;
+      const matchQ    = !q || name.toLowerCase().includes(q) || instr.toLowerCase().includes(q) || card.textContent.toLowerCase().includes(q);
+
+      let matchDeg = activeDegree === 'all';
+      if (!matchDeg) {
+        if (activeDegree === 'masters')  matchDeg = deg === 'masters';
+        if (activeDegree === 'bachelor') matchDeg = deg === 'bachelor';
+        if (activeDegree === 'diploma')  matchDeg = deg === 'diploma';
+      }
+
+      let matchYrs = activeYears === 'all';
+      if (!matchYrs) {
+        if (activeYears === '1-3')   matchYrs = yrs >= 1 && yrs <= 3;
+        if (activeYears === '3-7')   matchYrs = yrs >= 3 && yrs <= 7;
+        if (activeYears === '7plus') matchYrs = yrs > 7;
+      }
+
+      const show = matchInst && matchQ && matchDeg && matchYrs;
       card.style.display = show ? '' : 'none';
       if (show) visible++;
     });
